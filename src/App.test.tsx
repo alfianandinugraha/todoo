@@ -76,3 +76,22 @@ describe('form add todo', () => {
     expect(getByTestId('app-input-error').innerHTML).toBe('Please fill todo')
   })
 })
+
+describe('App handle todo item', () => {
+  it('Show todo body', () => {
+    const { getByTestId } = render(<App />)
+    fireEvent.change(getByTestId('app-input'), {
+      target: {
+        value: 'Buy milk',
+      },
+    })
+    fireEvent.click(getByTestId('app-button-add-todo'))
+    expect(getByTestId('todo-body').innerHTML).toBe('Buy milk')
+  })
+
+  it('todo not show if input is empty', () => {
+    const { getByTestId, queryByTestId } = render(<App />)
+    fireEvent.click(getByTestId('app-button-add-todo'))
+    expect(queryByTestId('todo-body')).not.toBeInTheDocument()
+  })
+})

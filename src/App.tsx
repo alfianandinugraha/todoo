@@ -5,12 +5,16 @@ import {
   Container,
   FormControl,
   InputGroup,
+  ListGroup,
   Row,
 } from 'react-bootstrap'
+import { Todo } from 'Types'
+import TodoItem from './components/TodoItem'
 
 const App = (): ReactElement => {
   const [inputTodo, setInputTodo] = useState('')
   const [errorInputTodo, setErrorInputTodo] = useState('')
+  const [todos, setTodos] = useState<Todo[]>([])
 
   const inputTodoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
@@ -21,6 +25,9 @@ const App = (): ReactElement => {
   const addTodoHandler = () => {
     setErrorInputTodo(!inputTodo ? 'Please fill todo' : '')
     setInputTodo('')
+
+    if (inputTodo)
+      setTodos([{ id: Math.random().toString(), content: inputTodo }, ...todos])
   }
 
   return (
@@ -57,6 +64,15 @@ const App = (): ReactElement => {
           >
             Add Todo
           </Button>
+        </Col>
+      </Row>
+      <Row className="mt-5">
+        <Col>
+          <ListGroup>
+            {todos.map((todo) => (
+              <TodoItem todo={todo} key={todo.id} />
+            ))}
+          </ListGroup>
         </Col>
       </Row>
     </Container>
