@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListGroup } from 'react-bootstrap'
+import { ButtonGroup, ListGroup, Button } from 'react-bootstrap'
 import { Todo } from 'Types'
 
 interface TodoItemProps {
@@ -7,8 +7,11 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ todo }: TodoItemProps): React.ReactElement => (
-  <ListGroup.Item>
+  <ListGroup.Item className="d-flex align-items-center">
     <main data-testid="todo-body">{todo.content}</main>
+    <ButtonGroup className="ml-auto">
+      <Button variant="danger">Delete</Button>
+    </ButtonGroup>
   </ListGroup.Item>
 )
 
