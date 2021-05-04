@@ -18,6 +18,11 @@ const App = (): ReactElement => {
     setInputTodo(newValue)
   }
 
+  const addTodoHandler = () => {
+    setErrorInputTodo(!inputTodo ? 'Please fill todo' : '')
+    setInputTodo('')
+  }
+
   return (
     <Container style={{ maxWidth: '500px' }} className="mt-5">
       <Row>
@@ -48,6 +53,7 @@ const App = (): ReactElement => {
             variant="primary"
             style={{ width: '30%' }}
             data-testid="app-button-add-todo"
+            onClick={addTodoHandler}
           >
             Add Todo
           </Button>
