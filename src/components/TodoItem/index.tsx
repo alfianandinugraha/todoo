@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonGroup, ListGroup, Button } from 'react-bootstrap'
+import { ButtonGroup, Button } from 'react-bootstrap'
 import { Todo } from 'Types'
 
 interface TodoItemProps {
@@ -17,10 +17,7 @@ const TodoItem = ({
   const updateTodoHandler = () => updateTodo && updateTodo(todo.id)
 
   return (
-    <ListGroup.Item
-      className="d-flex align-items-center"
-      data-testid="todo-item"
-    >
+    <div className="d-flex align-items-center" data-testid="todo-item">
       <main data-testid="todo-body">{todo.content}</main>
       <ButtonGroup className="ml-auto">
         <Button
@@ -38,7 +35,7 @@ const TodoItem = ({
           Update
         </Button>
       </ButtonGroup>
-    </ListGroup.Item>
+    </div>
   )
 }
 
