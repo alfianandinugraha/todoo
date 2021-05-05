@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
 import { Todo } from 'Types'
 import UpdateModal from '.'
@@ -33,5 +33,17 @@ describe('UpdateModal test dom', () => {
     expect((getByTestId('update-todo-content') as HTMLInputElement).value).toBe(
       'Eat food'
     )
+  })
+})
+
+describe('Update todo check props', () => {
+  it('closeModal called', () => {
+    const closeModal = jest.fn()
+    const { getByTestId } = render(
+      <UpdateModal isShow closeModal={closeModal} todo={todo} />
+    )
+    fireEvent.click(getByTestId('close-modal'))
+    expect(closeModal).toBeCalledTimes(1)
+    expect(closeModal.mock.calls[0][0]).toBeFalsy()
   })
 })

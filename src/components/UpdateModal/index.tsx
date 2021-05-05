@@ -30,7 +30,13 @@ const UpdateModal = ({
         </InputGroup>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary">Close</Button>
+        <Button
+          variant="secondary"
+          data-testid="close-modal"
+          onClick={closeModalHandler}
+        >
+          Close
+        </Button>
         <Button variant="primary">Save</Button>
       </Modal.Footer>
     </Modal>
