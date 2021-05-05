@@ -1,3 +1,5 @@
+Hello 👋 this is my personal project to learn what is an unit testing. I usually write reactjs app with out unit testing. And now, I feel enjoy with unit testing 😆
+
 # Create React Typescript App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
