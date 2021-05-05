@@ -10,9 +10,11 @@ import {
 } from 'react-bootstrap'
 import { Todo } from 'Types'
 import TodoItem from './components/TodoItem'
+import UpdateModal from './components/UpdateModal'
 
 const App = (): ReactElement => {
   const [inputTodo, setInputTodo] = useState('')
+  const [isUpdateModalShow, setIsUpdateModalShow] = useState(false)
   const [errorInputTodo, setErrorInputTodo] = useState('')
   const [todos, setTodos] = useState<Todo[]>([])
 
@@ -34,6 +36,12 @@ const App = (): ReactElement => {
     const newTodos = todos.filter((todo) => todo.id !== id)
     setTodos(newTodos)
   }
+
+  const closeModalHandler = (status: boolean) => {
+    setIsUpdateModalShow(status)
+  }
+
+  const showUpdateTodoModal = () => setIsUpdateModalShow(true)
 
   return (
     <Container style={{ maxWidth: '500px' }} className="mt-5">
@@ -75,11 +83,18 @@ const App = (): ReactElement => {
         <Col>
           <ListGroup>
             {todos.map((todo) => (
-              <TodoItem
-                todo={todo}
-                key={todo.id}
-                deleteTodo={deleteTodoHandler}
-              />
+              <ListGroup.Item key={todo.id}>
+                <TodoItem
+                  todo={todo}
+                  deleteTodo={deleteTodoHandler}
+                  updateTodo={showUpdateTodoModal}
+                />
+                <UpdateModal
+                  isShow={isUpdateModalShow}
+                  closeModal={closeModalHandler}
+                  todo={todo}
+                />
+              </ListGroup.Item>
             ))}
           </ListGroup>
         </Col>

@@ -1,4 +1,8 @@
-import { fireEvent, render } from '@testing-library/react'
+import {
+  fireEvent,
+  render,
+  waitForElementToBeRemoved,
+} from '@testing-library/react'
 import React from 'react'
 import App from './App'
 
@@ -112,5 +116,35 @@ describe('App handle todo item', () => {
     fireEvent.click(getByTestId('app-button-add-todo'))
     fireEvent.click(getByTestId('delete-todo'))
     expect(queryByTestId('todo-item')).not.toBeInTheDocument()
+  })
+})
+
+describe('Handle modal UpdateModal', () => {
+  it('show modal', () => {
+    const { getByTestId, queryByTestId } = render(<App />)
+
+    expect(queryByTestId('update-modal')).not.toBeInTheDocument()
+
+    fireEvent.change(getByTestId('app-input'), setInputValue('buy egg'))
+    fireEvent.click(getByTestId('app-button-add-todo'))
+    fireEvent.click(getByTestId('update-todo'))
+
+    expect(queryByTestId('update-modal')).toBeInTheDocument()
+  })
+
+  it('toggle modal', async () => {
+    const { getByTestId, queryByTestId } = render(<App />)
+
+    expect(queryByTestId('update-modal')).not.toBeInTheDocument()
+
+    fireEvent.change(getByTestId('app-input'), setInputValue('buy egg'))
+    fireEvent.click(getByTestId('app-button-add-todo'))
+    fireEvent.click(getByTestId('update-todo'))
+
+    expect(queryByTestId('update-modal')).toBeInTheDocument()
+
+    fireEvent.click(getByTestId('close-modal'))
+    await waitForElementToBeRemoved(queryByTestId('update-modal'))
+    expect(queryByTestId('update-modal')).not.toBeInTheDocument()
   })
 })
