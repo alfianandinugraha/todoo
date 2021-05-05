@@ -92,7 +92,7 @@ describe('Passing data to parent', () => {
     })
   })
 
-  it('Disbaled update new todo if input empty', () => {
+  it('Disable passing new todo to parent', () => {
     const closeModal = jest.fn()
     const newTodoHandler = jest.fn()
     const { getByTestId, queryByTestId } = render(
