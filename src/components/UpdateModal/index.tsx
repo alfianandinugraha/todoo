@@ -43,12 +43,14 @@ const UpdateModal = ({
         <Modal.Title>Update Todo</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <InputGroup>
+        <InputGroup hasValidation>
           <FormControl
             type="text"
             value={inputTodo}
             data-testid="update-todo-content"
             onChange={inputTodoHandler}
+            required
+            isInvalid={isInputError}
           />
           {isInputError && (
             <FormControl.Feedback
