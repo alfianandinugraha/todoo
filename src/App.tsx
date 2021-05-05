@@ -35,6 +35,13 @@ const App = (): ReactElement => {
     setTodos(newTodos)
   }
 
+  const updateTodoHandler = (newTodo: Todo) => {
+    const newTodos = todos.map((todo) =>
+      todo.id === newTodo.id ? newTodo : todo
+    )
+    setTodos(newTodos)
+  }
+
   return (
     <Container style={{ maxWidth: '500px' }} className="mt-5">
       <Row>
@@ -76,7 +83,11 @@ const App = (): ReactElement => {
           <ListGroup>
             {todos.map((todo) => (
               <ListGroup.Item key={todo.id}>
-                <TodoItem todo={todo} deleteTodo={deleteTodoHandler} />
+                <TodoItem
+                  todo={todo}
+                  deleteTodo={deleteTodoHandler}
+                  updateTodo={updateTodoHandler}
+                />
               </ListGroup.Item>
             ))}
           </ListGroup>

@@ -163,4 +163,19 @@ describe('Handle modal UpdateModal', () => {
       'buy fruit'
     )
   })
+
+  it('update todo from modal', async () => {
+    const { getByTestId, queryByTestId, getByText } = render(<App />)
+
+    expect(queryByTestId('update-modal')).not.toBeInTheDocument()
+
+    fireEvent.change(getByTestId('app-input'), setInputValue('buy egg'))
+    fireEvent.click(getByTestId('app-button-add-todo'))
+    fireEvent.click(getByTestId('update-todo'))
+    fireEvent.change(getByTestId('update-todo-content'), setInputValue('drink'))
+    fireEvent.click(getByTestId('save-update'))
+    await waitForElementToBeRemoved(getByTestId('update-modal'))
+
+    expect(getByText('drink')).toBeInTheDocument()
+  })
 })
