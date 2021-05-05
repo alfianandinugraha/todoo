@@ -24,14 +24,14 @@ const TodoItem = ({
       <main data-testid="todo-body">{todo.content}</main>
       <ButtonGroup className="ml-auto">
         <Button
-          variant="danger"
+          variant="outline-danger"
           data-testid="delete-todo"
           onClick={deleteTodoHandler}
         >
           Delete
         </Button>
         <Button
-          variant="primary"
+          variant="outline-primary"
           data-testid="update-todo"
           onClick={updateTodoHandler}
         >
