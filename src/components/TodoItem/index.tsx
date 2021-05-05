@@ -5,10 +5,16 @@ import { Todo } from 'Types'
 interface TodoItemProps {
   todo: Todo
   deleteTodo?: (id: string) => void
+  updateTodo?: (id: string) => void
 }
 
-const TodoItem = ({ todo, deleteTodo }: TodoItemProps): React.ReactElement => {
+const TodoItem = ({
+  todo,
+  deleteTodo,
+  updateTodo,
+}: TodoItemProps): React.ReactElement => {
   const deleteTodoHandler = () => deleteTodo && deleteTodo(todo.id)
+  const updateTodoHandler = () => updateTodo && updateTodo(todo.id)
 
   return (
     <ListGroup.Item
@@ -24,6 +30,13 @@ const TodoItem = ({ todo, deleteTodo }: TodoItemProps): React.ReactElement => {
         >
           Delete
         </Button>
+        <Button
+          variant="primary"
+          data-testid="update-todo"
+          onClick={updateTodoHandler}
+        >
+          Update
+        </Button>
       </ButtonGroup>
     </ListGroup.Item>
   )
@@ -31,6 +44,7 @@ const TodoItem = ({ todo, deleteTodo }: TodoItemProps): React.ReactElement => {
 
 TodoItem.defaultProps = {
   deleteTodo: () => {},
+  updateTodo: () => {},
 }
 
 export default TodoItem

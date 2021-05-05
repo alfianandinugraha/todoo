@@ -39,4 +39,28 @@ describe('check if props called', () => {
     render(<TodoItem todo={todo} deleteTodo={deleteTodo} />)
     expect(deleteTodo).toBeCalledTimes(0)
   })
+
+  it('update button called', () => {
+    const updateTodo = jest.fn()
+    const todo: Todo = {
+      id: '5',
+      content: 'Eat food',
+    }
+    const { getByTestId } = render(
+      <TodoItem todo={todo} updateTodo={updateTodo} />
+    )
+    fireEvent.click(getByTestId('update-todo'))
+    expect(updateTodo).toBeCalledTimes(1)
+    expect(updateTodo.mock.calls[0][0]).toBe('5')
+  })
+
+  it('function update not called if it is not pass', () => {
+    const updateTodo = jest.fn()
+    const todo: Todo = {
+      id: '5',
+      content: 'Eat food',
+    }
+    render(<TodoItem todo={todo} />)
+    expect(updateTodo).toBeCalledTimes(0)
+  })
 })
