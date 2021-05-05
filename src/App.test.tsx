@@ -147,4 +147,20 @@ describe('Handle modal UpdateModal', () => {
     await waitForElementToBeRemoved(queryByTestId('update-modal'))
     expect(queryByTestId('update-modal')).not.toBeInTheDocument()
   })
+
+  it('input value from props', async () => {
+    const { getByTestId, queryByTestId, getAllByTestId } = render(<App />)
+
+    expect(queryByTestId('update-modal')).not.toBeInTheDocument()
+
+    fireEvent.change(getByTestId('app-input'), setInputValue('buy egg'))
+    fireEvent.click(getByTestId('app-button-add-todo'))
+    fireEvent.change(getByTestId('app-input'), setInputValue('buy fruit'))
+    fireEvent.click(getByTestId('app-button-add-todo'))
+    fireEvent.click(getAllByTestId('update-todo')[0])
+
+    expect((getByTestId('update-todo-content') as HTMLInputElement).value).toBe(
+      'buy fruit'
+    )
+  })
 })

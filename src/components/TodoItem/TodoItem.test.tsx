@@ -50,8 +50,12 @@ describe('check if props called', () => {
       <TodoItem todo={todo} updateTodo={updateTodo} />
     )
     fireEvent.click(getByTestId('update-todo'))
+    fireEvent.change(getByTestId('update-todo-content'), {
+      target: { value: 'Drink' },
+    })
+    fireEvent.click(getByTestId('save-update'))
     expect(updateTodo).toBeCalledTimes(1)
-    expect(updateTodo.mock.calls[0][0]).toBe('5')
+    expect(updateTodo.mock.calls[0][0]).toEqual({ ...todo, content: 'Drink' })
   })
 
   it('function update not called if it is not pass', () => {

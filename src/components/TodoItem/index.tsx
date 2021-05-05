@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ButtonGroup, Button } from 'react-bootstrap'
 import { Todo } from 'Types'
+import UpdateModal from '@/components/UpdateModal'
 
 interface TodoItemProps {
   todo: Todo
   deleteTodo?: (id: string) => void
-  updateTodo?: (id: string) => void
+  updateTodo?: (todo: Todo) => void
 }
 
 const TodoItem = ({
@@ -13,8 +14,25 @@ const TodoItem = ({
   deleteTodo,
   updateTodo,
 }: TodoItemProps): React.ReactElement => {
-  const deleteTodoHandler = () => deleteTodo && deleteTodo(todo.id)
-  const updateTodoHandler = () => updateTodo && updateTodo(todo.id)
+  const [isUpdateModalShow, setIsUpdateModalShow] = useState(false)
+  const deleteTodoHandler = () => {
+    if (deleteTodo) {
+      deleteTodo(todo.id)
+    }
+  }
+  const showUpdateModal = () => {
+    setIsUpdateModalShow(true)
+  }
+
+  const closeModalHandler = () => {
+    setIsUpdateModalShow(false)
+  }
+
+  const newTodoHandler = (newTodo: Todo) => {
+    if (updateTodo) {
+      updateTodo(newTodo)
+    }
+  }
 
   return (
     <div className="d-flex align-items-center" data-testid="todo-item">
@@ -30,11 +48,17 @@ const TodoItem = ({
         <Button
           variant="outline-primary"
           data-testid="update-todo"
-          onClick={updateTodoHandler}
+          onClick={showUpdateModal}
         >
           Update
         </Button>
       </ButtonGroup>
+      <UpdateModal
+        isShow={isUpdateModalShow}
+        closeModal={closeModalHandler}
+        todo={todo}
+        newTodo={newTodoHandler}
+      />
     </div>
   )
 }
