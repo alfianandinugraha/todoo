@@ -91,4 +91,23 @@ describe('Passing data to parent', () => {
       content: 'Drink milk',
     })
   })
+
+  it('Disbaled update new todo if input empty', () => {
+    const closeModal = jest.fn()
+    const newTodoHandler = jest.fn()
+    const { getByTestId, queryByTestId } = render(
+      <UpdateModal
+        isShow
+        closeModal={closeModal}
+        todo={todo}
+        newTodo={newTodoHandler}
+      />
+    )
+    fireEvent.change(getByTestId('update-todo-content'), setInputValue(''))
+    fireEvent.click(getByTestId('save-update'))
+
+    expect(closeModal).toBeCalledTimes(0)
+    expect(newTodoHandler).toBeCalledTimes(0)
+    expect(queryByTestId('update-todo-error')).toBeInTheDocument()
+  })
 })

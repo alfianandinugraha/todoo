@@ -20,8 +20,15 @@ const UpdateModal = ({
   const closeModalHandler = () => closeModal(false)
 
   const saveTodoHandler = () => {
+    if (!newTodo) return
+
+    if (!inputTodo) {
+      setIsInputError(!inputTodo)
+      return
+    }
+
     closeModal(false)
-    if (newTodo) newTodo({ ...todo, content: inputTodo })
+    newTodo({ ...todo, content: inputTodo })
   }
 
   const inputTodoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
