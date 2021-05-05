@@ -4,15 +4,30 @@ import { Todo } from 'Types'
 
 interface TodoItemProps {
   todo: Todo
+  deleteTodo?: (id: string) => void
 }
 
-const TodoItem = ({ todo }: TodoItemProps): React.ReactElement => (
-  <ListGroup.Item className="d-flex align-items-center">
-    <main data-testid="todo-body">{todo.content}</main>
-    <ButtonGroup className="ml-auto">
-      <Button variant="danger">Delete</Button>
-    </ButtonGroup>
-  </ListGroup.Item>
-)
+const TodoItem = ({ todo, deleteTodo }: TodoItemProps): React.ReactElement => {
+  const deleteTodoHandler = () => deleteTodo && deleteTodo(todo.id)
+
+  return (
+    <ListGroup.Item className="d-flex align-items-center">
+      <main data-testid="todo-body">{todo.content}</main>
+      <ButtonGroup className="ml-auto">
+        <Button
+          variant="danger"
+          data-testid="delete-todo"
+          onClick={deleteTodoHandler}
+        >
+          Delete
+        </Button>
+      </ButtonGroup>
+    </ListGroup.Item>
+  )
+}
+
+TodoItem.defaultProps = {
+  deleteTodo: () => {},
+}
 
 export default TodoItem
