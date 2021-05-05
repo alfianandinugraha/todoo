@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Modal } from 'react-bootstrap'
+import { Button, FormControl, InputGroup, Modal } from 'react-bootstrap'
 import { Todo } from 'Types'
 
 interface UpdateModalProps {
@@ -20,6 +20,15 @@ const UpdateModal = ({
       <Modal.Header closeButton>
         <Modal.Title>Update Todo</Modal.Title>
       </Modal.Header>
+      <Modal.Body>
+        <InputGroup>
+          <FormControl
+            type="text"
+            defaultValue={todo.content}
+            data-testid="update-todo-content"
+          />
+        </InputGroup>
+      </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary">Close</Button>
         <Button variant="primary">Save</Button>

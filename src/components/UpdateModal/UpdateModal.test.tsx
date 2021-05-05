@@ -24,4 +24,14 @@ describe('UpdateModal test dom', () => {
     )
     expect(queryByTestId('update-modal')).not.toBeInTheDocument()
   })
+
+  it('Show todo content on input', () => {
+    const closeModal = jest.fn()
+    const { getByTestId } = render(
+      <UpdateModal isShow closeModal={closeModal} todo={todo} />
+    )
+    expect((getByTestId('update-todo-content') as HTMLInputElement).value).toBe(
+      'Eat food'
+    )
+  })
 })
