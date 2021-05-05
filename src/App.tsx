@@ -30,6 +30,11 @@ const App = (): ReactElement => {
       setTodos([{ id: Math.random().toString(), content: inputTodo }, ...todos])
   }
 
+  const deleteTodoHandler = (id: string) => {
+    const newTodos = todos.filter((todo) => todo.id !== id)
+    setTodos(newTodos)
+  }
+
   return (
     <Container style={{ maxWidth: '500px' }} className="mt-5">
       <Row>
@@ -70,7 +75,11 @@ const App = (): ReactElement => {
         <Col>
           <ListGroup>
             {todos.map((todo) => (
-              <TodoItem todo={todo} key={todo.id} />
+              <TodoItem
+                todo={todo}
+                key={todo.id}
+                deleteTodo={deleteTodoHandler}
+              />
             ))}
           </ListGroup>
         </Col>

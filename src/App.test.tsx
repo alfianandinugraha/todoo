@@ -2,6 +2,12 @@ import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
 import App from './App'
 
+const setInputValue = (value: string) => ({
+  target: {
+    value,
+  },
+})
+
 beforeEach(() => {
   document.body.innerHTML = ''
 })
@@ -93,5 +99,18 @@ describe('App handle todo item', () => {
     const { getByTestId, queryByTestId } = render(<App />)
     fireEvent.click(getByTestId('app-button-add-todo'))
     expect(queryByTestId('todo-body')).not.toBeInTheDocument()
+  })
+
+  it('todo not found if not input before', () => {
+    const { queryByTestId } = render(<App />)
+    expect(queryByTestId('todo-item')).not.toBeInTheDocument()
+  })
+
+  it('delete todo from dom', () => {
+    const { getByTestId, queryByTestId } = render(<App />)
+    fireEvent.change(getByTestId('app-input'), setInputValue('buy egg'))
+    fireEvent.click(getByTestId('app-button-add-todo'))
+    fireEvent.click(getByTestId('delete-todo'))
+    expect(queryByTestId('todo-item')).not.toBeInTheDocument()
   })
 })
