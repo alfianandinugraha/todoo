@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, FormControl, InputGroup, Modal } from 'react-bootstrap'
 import { Todo } from 'Types'
 
@@ -6,14 +6,27 @@ interface UpdateModalProps {
   todo: Todo
   isShow: boolean
   closeModal: (status: boolean) => void
+  newTodo?: (todo: Todo) => void
 }
 
 const UpdateModal = ({
   todo,
   isShow,
   closeModal,
+  newTodo,
 }: UpdateModalProps): React.ReactElement => {
+  const [inputTodo, setInputTodo] = useState(todo.content)
   const closeModalHandler = () => closeModal(false)
+
+  const saveTodoHandler = () => {
+    closeModal(false)
+    if (newTodo) newTodo({ ...todo, content: inputTodo })
+  }
+
+  const inputTodoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value
+    setInputTodo(newValue)
+  }
 
   return (
     <Modal show={isShow} onHide={closeModalHandler} data-testid="update-modal">
@@ -24,8 +37,9 @@ const UpdateModal = ({
         <InputGroup>
           <FormControl
             type="text"
-            defaultValue={todo.content}
+            value={inputTodo}
             data-testid="update-todo-content"
+            onChange={inputTodoHandler}
           />
         </InputGroup>
       </Modal.Body>
@@ -37,10 +51,20 @@ const UpdateModal = ({
         >
           Close
         </Button>
-        <Button variant="primary">Save</Button>
+        <Button
+          variant="primary"
+          onClick={saveTodoHandler}
+          data-testid="save-update"
+        >
+          Save
+        </Button>
       </Modal.Footer>
     </Modal>
   )
+}
+
+UpdateModal.defaultProps = {
+  newTodo: () => {},
 }
 
 export default UpdateModal
