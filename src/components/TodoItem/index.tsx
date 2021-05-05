@@ -11,7 +11,10 @@ const TodoItem = ({ todo, deleteTodo }: TodoItemProps): React.ReactElement => {
   const deleteTodoHandler = () => deleteTodo && deleteTodo(todo.id)
 
   return (
-    <ListGroup.Item className="d-flex align-items-center">
+    <ListGroup.Item
+      className="d-flex align-items-center"
+      data-testid="todo-item"
+    >
       <main data-testid="todo-body">{todo.content}</main>
       <ButtonGroup className="ml-auto">
         <Button
