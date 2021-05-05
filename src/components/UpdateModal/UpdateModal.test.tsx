@@ -40,6 +40,18 @@ describe('UpdateModal test dom', () => {
       'Eat food'
     )
   })
+
+  it('Show error message if new todo content is empty', () => {
+    const closeModal = jest.fn()
+    const { getByTestId, queryByTestId } = render(
+      <UpdateModal isShow closeModal={closeModal} todo={todo} />
+    )
+    expect(queryByTestId('update-todo-error')).not.toBeInTheDocument()
+
+    fireEvent.change(getByTestId('update-todo-content'), setInputValue(''))
+
+    expect(queryByTestId('update-todo-error')).toBeInTheDocument()
+  })
 })
 
 describe('Update todo check props', () => {

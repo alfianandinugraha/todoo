@@ -16,6 +16,7 @@ const UpdateModal = ({
   newTodo,
 }: UpdateModalProps): React.ReactElement => {
   const [inputTodo, setInputTodo] = useState(todo.content)
+  const [isInputError, setIsInputError] = useState(false)
   const closeModalHandler = () => closeModal(false)
 
   const saveTodoHandler = () => {
@@ -25,6 +26,7 @@ const UpdateModal = ({
 
   const inputTodoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
+    setIsInputError(!newValue)
     setInputTodo(newValue)
   }
 
@@ -41,6 +43,14 @@ const UpdateModal = ({
             data-testid="update-todo-content"
             onChange={inputTodoHandler}
           />
+          {isInputError && (
+            <FormControl.Feedback
+              type="invalid"
+              data-testid="update-todo-error"
+            >
+              Please fill todo
+            </FormControl.Feedback>
+          )}
         </InputGroup>
       </Modal.Body>
       <Modal.Footer>
